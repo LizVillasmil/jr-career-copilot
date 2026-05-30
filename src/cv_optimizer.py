@@ -1,7 +1,9 @@
+from html import parser
 import os
 import sys
 import argparse
 from dotenv import load_dotenv
+from services.robustness_judge import RobustnessJudgeService
 
 # Cargar variables de entorno desde el archivo .env si existe
 load_dotenv()
@@ -62,7 +64,13 @@ def parse_arguments() -> argparse.Namespace:
         default="templates/cv_template.html",
         help="Ruta a la plantilla HTML Jinja2 (por defecto: templates/cv_template.html)."
     )
+    parser.add_argument(
+    "--robustness",
+    action="store_true",
+    help="Ejecuta auditoría de robustez del CV."
+    ) 
     return parser.parse_args()
+  
 
 def main() -> None:
     """
@@ -85,6 +93,10 @@ def main() -> None:
     
     # 4. Optimizar el CV mediante la API de Gemini
     optimized_cv = optimize_cv(profile, job_description, args.lang)
+    
+    if args.robustness:
+        judge = RobustnessJudgeService()
+        judge.run_validation()
     
     # 5. Generar formato Markdown
     print("[INFO] Generando representación en formato Markdown...")
