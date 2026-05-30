@@ -3,6 +3,7 @@ import os
 import sys
 import argparse
 from dotenv import load_dotenv
+from services.mock_interview import MockInterviewService
 from services.robustness_judge import RobustnessJudgeService
 
 # Cargar variables de entorno desde el archivo .env si existe
@@ -69,6 +70,11 @@ def parse_arguments() -> argparse.Namespace:
     action="store_true",
     help="Ejecuta auditoría de robustez del CV."
     ) 
+    parser.add_argument(
+    "--mock-interview",
+    action="store_true",
+    help="Ejecuta simulación de entrevista técnica."
+   )
     return parser.parse_args()
   
 
@@ -98,6 +104,9 @@ def main() -> None:
         judge = RobustnessJudgeService()
         judge.run_validation(profile, optimized_cv)
     
+    if args.mock_interview:
+       interview = MockInterviewService()
+       interview.run_interactive(profile,job_description)
     # 5. Generar formato Markdown
     print("[INFO] Generando representación en formato Markdown...")
     markdown_content = generate_markdown(optimized_cv, args.lang)
