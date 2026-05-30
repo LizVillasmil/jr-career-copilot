@@ -96,7 +96,7 @@ def main() -> None:
     
     if args.robustness:
         judge = RobustnessJudgeService()
-        judge.run_validation()
+        judge.run_validation(profile, optimized_cv)
     
     # 5. Generar formato Markdown
     print("[INFO] Generando representación en formato Markdown...")
