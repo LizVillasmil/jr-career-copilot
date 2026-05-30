@@ -51,3 +51,13 @@ class OptimizedCV(BaseModel):
     education: List[OptimizedEducation] = Field(
         description="List of education details and tailored academic projects."
     )
+
+class Alucinacion(BaseModel):
+    linea_cv: str
+    dato_inventado: str
+    severidad: str
+
+class ReporteRobustez(BaseModel):
+    score_honestidad: int
+    alucinaciones_detectadas: List[Alucinacion]
+    comentario_auditor: str
