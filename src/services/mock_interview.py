@@ -53,7 +53,9 @@ REGLAS OBLIGATORIAS:
    - THINKING
    - ANALYSIS
 9. Responde únicamente con la pregunta que deseas hacer.
-10. Después de la séptima pregunta espera la solicitud de feedback final.
+10. Nunca generes feedback por iniciativa propia.
+11. Nunca finalices la entrevista por iniciativa propia.
+12. Tu única tarea es generar una pregunta técnica cuando se te solicite.
 """
 
         context = f"""
@@ -78,7 +80,8 @@ VACANTE:
         print("=" * 60)
 
         for question_number in range(1, 8):
-
+            
+            
             response = client.models.generate_content(
                 model="gemini-2.5-flash",
                 contents=self.messages,
@@ -89,15 +92,33 @@ VACANTE:
             )
 
             question = response.text.strip()
-            
+
             for forbidden in [
-               "SILENT THOUGHT",
-               "INTERNAL REASONING",
-               "THINKING",
-               "ANALYSIS"
+                "SILENT THOUGHT",
+                "INTERNAL REASONING",
+                "THINKING",
+                "ANALYSIS"
             ]:
-              if forbidden in question.upper():
-                question = question.split("\n\n")[-1].strip()
+                if forbidden in question.upper():
+                    question = question.split("\n\n")[-1].strip()
+
+            forbidden_feedback_words = [
+                "feedback",
+                "fortalezas",
+                "debilidades",
+                "evaluación",
+                "calificación",
+                "conclusión"
+            ]
+
+            if any(
+                word in question.lower()
+                for word in forbidden_feedback_words
+            ):
+                question = (
+                    "¿Podrías profundizar en alguna experiencia o proyecto "
+                    "relacionado con las tecnologías mencionadas en tu perfil?"
+                )
 
             print(f"\n[Pregunta {question_number}]")
             print(question)
