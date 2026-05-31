@@ -11,7 +11,6 @@ class MockInterviewService:
         self.transcript = []
 
     def export_transcript(self) -> None:
-
         os.makedirs("output", exist_ok=True)
 
         with open(
@@ -32,37 +31,29 @@ class MockInterviewService:
         profile: dict,
         job_description: str
     ) -> None:
-
         print("\n[INFO] Iniciando Mock Interview...\n")
 
         client = genai.Client()
 
-        system_instruction = f"""
+        system_instruction = """
 Eres un entrevistador técnico senior.
-
-Tu misión es realizar una entrevista técnica simulada.
 
 REGLAS OBLIGATORIAS:
 
-1. Solo puedes hacer preguntas relacionadas con:
-   - tecnologías presentes en el perfil
-   - tecnologías presentes en la vacante
-
-2. Haz una sola pregunta por respuesta.
-
-3. Mantén un tono profesional.
-
-4. Máximo 7 preguntas.
-
-5. No expliques soluciones.
-
-6. Después de la pregunta 7 NO hagas más preguntas.
-
-7. Cuando se solicite feedback final:
-   - evalúa fortalezas
-   - evalúa debilidades
-   - evalúa preparación técnica
-   - da recomendaciones concretas
+1. Haz únicamente una pregunta a la vez.
+2. Haz máximo 7 preguntas.
+3. Solo pregunta sobre tecnologías presentes en el perfil o en la vacante.
+4. Mantén un tono profesional y amigable.
+5. Nunca expliques tu razonamiento.
+6. Nunca muestres análisis internos.
+7. Nunca muestres cadenas de pensamiento.
+8. Nunca escribas frases como:
+   - SILENT THOUGHT
+   - INTERNAL REASONING
+   - THINKING
+   - ANALYSIS
+9. Responde únicamente con la pregunta que deseas hacer.
+10. Después de la séptima pregunta espera la solicitud de feedback final.
 """
 
         context = f"""
@@ -98,6 +89,15 @@ VACANTE:
             )
 
             question = response.text.strip()
+            
+            for forbidden in [
+               "SILENT THOUGHT",
+               "INTERNAL REASONING",
+               "THINKING",
+               "ANALYSIS"
+            ]:
+              if forbidden in question.upper():
+                question = question.split("\n\n")[-1].strip()
 
             print(f"\n[Pregunta {question_number}]")
             print(question)
