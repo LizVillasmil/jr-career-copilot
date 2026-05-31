@@ -15,6 +15,8 @@ professional_summary: >
   sistemas distribuidos y machine learning. Experiencia práctica con proyectos académicos en el área de frontend y 
   ligeramente en backend. Habilidades sólidas en lógica y resolución de problemas, en continuo aprendizaje para mejorar mis competencias ténicas
   y adapatarme a las necesidades del mercado laboral. Busco oportunidades para aplicar mis conocimientos y crecer profesionalmente en un entorno dinámico e innovador.
+  También tengo experiencia en la resolución y gestión de proyectos académicos, con habilidades blandas para comunicarme con efectividad con el grupo de trabajo y
+  dirigir así como seguir la línea base planteada, evitando los conflictos y retrasos con las entregas.
 skills:
   - "Python"
   - "C++"
@@ -43,3 +45,10 @@ experiences:
     end_date: "2025-06"
     achievements:
       - "Ayudé en la labor de gestión de información de la plataforma UVirtual, facilitando el acceso a recursos académicos para estudiantes y profesores."
+
+  - company: "Facultad de Ingeniería, UFPS"
+    role: "Desarrolladora frontend y tester de proyectos académicos"
+    start_date: "2023-02"
+    end_date: "2026-06"
+    achievements:
+      - "Trabajé desarrollando páginas web con compañeros y enfocándome en pruebas unitarias, así como la documentación de los resultados y errores."
